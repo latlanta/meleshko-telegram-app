@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Твой внутренний ребёнок</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="inner-child-style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Main Screen -->
+        <div id="mainScreen" class="screen active">
+            <div class="header">
+                <button class="back-btn" onclick="goBack()">← Назад</button>
+                <h1 class="title">Твой внутренний ребёнок</h1>
+            </div>
+
+            <div class="child-avatar-container">
+                <div class="child-avatar">
+                    <img id="childImage" src="https://www.genspark.ai/api/files/s/fVBtz8Ft" alt="Внутренний ребёнок">
+                    <div class="avatar-glow"></div>
+                </div>
+                <div class="child-name">Твой внутренний ребёнок</div>
+                <div class="child-status" id="childStatus">Спокойный</div>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span>Эмоциональное исцеление</span>
+                    <span id="progressPercent">30%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 30%"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="stat">
+                        <span class="stat-icon">💬</span>
+                        <span class="stat-value" id="dialogCount">0</span>
+                        <span class="stat-label">Диалогов</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">💡</span>
+                        <span class="stat-value" id="insightCount">0</span>
+                        <span class="stat-label">Инсайтов</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">🏆</span>
+                        <span class="stat-value" id="achievementCount">0</span>
+                        <span class="stat-label">Достижений</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="primary-btn" onclick="startDialogue()">
+                    <span class="btn-icon">💬</span>
+                    <span class="btn-text">Поговорить с ребёнком</span>
+                </button>
+                <button class="secondary-btn" onclick="showDiary()">
+                    <span class="btn-icon">📖</span>
+                    <span class="btn-text">Дневник диалогов</span>
+                </button>
+                <button class="secondary-btn" onclick="showInsights()">
+                    <span class="btn-icon">💡</span>
+                    <span class="btn-text">Мои инсайты</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dialogue Screen -->
+        <div id="dialogueScreen" class="screen">
+            <div class="header">
+                <button class="back-btn" onclick="showMainScreen()">← Назад</button>
+                <h1 class="title">Диалог</h1>
+            </div>
+
+            <div class="dialogue-container">
+                <div class="dialogue-messages" id="messages">
+                    <!-- Messages will be added here -->
+                </div>
+                
+                <div class="child-typing" id="typing" style="display: none;">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-text">Ребёнок печатает...</span>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <textarea 
+                    id="userInput" 
+                    placeholder="Напишите ответ..." 
+                    rows="3"
+                    onkeypress="handleKeyPress(event)"
+                ></textarea>
+                <button class="send-btn" onclick="sendMessage()">
+                    <span>Отправить</span>
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Diary Screen -->
+        <div id="diaryScreen" class="screen">
+            <div class="header">
+                <button class="back-btn" onclick="showMainScreen()">← Назад</button>
+                <h1 class="title">Дневник диалогов</h1>
+            </div>
+
+            <div class="diary-list" id="diaryList">
+                <!-- Diary entries will be added here -->
+            </div>
+        </div>
+
+        <!-- Insights Screen -->
+        <div id="insightsScreen" class="screen">
+            <div class="header">
+                <button class="back-btn" onclick="showMainScreen()">← Назад</button>
+                <h1 class="title">Мои инсайты</h1>
+            </div>
+
+            <div class="insights-list" id="insightsList">
+                <!-- Insights will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="inner-child-app.js"></script>
+</body>
+</html>
