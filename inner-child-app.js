@@ -138,7 +138,7 @@ function addMessageToDOM(text, type) {
 }
 
 // Отправка сообщения
-function sendMessage() {
+async function sendMessage() {
     const input = document.getElementById('userInput');
     const text = input.value.trim();
     
@@ -159,10 +159,23 @@ function sendMessage() {
         tg.HapticFeedback.impactOccurred('light');
     }
     
-    // Получить ответ от "ребёнка"
-    setTimeout(() => {
-        const response = generateChildResponse(text);
-        addChildMessage(response);
+    // Показать индикатор печатания
+    document.getElementById('typing').style.display = 'flex';
+    
+    try {
+        // Получить ответ от "ребёнка" (асинхронно)
+        const response = await generateChildResponse(text);
+        
+        // Скрыть индикатор
+        document.getElementById('typing').style.display = 'none';
+        
+        // Добавить ответ
+        addMessageToDOM(response, 'child');
+        appState.messages.push({
+            text: response,
+            type: 'child',
+            timestamp: new Date().toISOString()
+        });
         
         // Обновить прогресс
         appState.emotionalHealth = Math.min(100, appState.emotionalHealth + 5);
@@ -173,52 +186,104 @@ function sendMessage() {
         
         updateUI();
         saveState();
-    }, 1000);
+        
+    } catch (error) {
+        console.error('Send message error:', error);
+        document.getElementById('typing').style.display = 'none';
+        
+        // Отобразить ошибку пользователю
+        addMessageToDOM('Прости, мне страшно... Попробуй ещё раз...', 'child');
+    }
 }
 
-// Генерация ответа ребёнка (упрощённая версия без API)
-function generateChildResponse(userMessage) {
-    const responses = {
-        'привет': [
-            "Привет... Я рад, что ты со мной разговариваешь...",
-            "Здравствуй... Мне так не хватало этого..."
-        ],
-        'как': [
-            "Мне бывает страшно... Но когда ты здесь, мне легче...",
-            "Иногда мне грустно... Но я стараюсь быть сильным..."
-        ],
-        'почему': [
-            "Я не знаю... Мне просто хотелось, чтобы меня любили...",
-            "Я думаю... Я просто хотел быть важным для них..."
-        ],
-        'люблю': [
-            "Правда? Мне так нужно это слышать... Спасибо...",
-            "Это так важно для меня... Я тоже тебя люблю..."
-        ],
-        'прости': [
-            "Ты не виноват... Я просто хочу, чтобы ты меня понимал...",
-            "Всё хорошо... Главное, что ты сейчас здесь со мной..."
-        ],
-        'default': [
-            "Спасибо, что говоришь со мной... Мне нужно это...",
-            "Я рад, что ты здесь... Продолжай, пожалуйста...",
-            "Мне важно знать, что ты слышишь меня...",
-            "Я чувствую, что ты меня понимаешь... Это так ценно..."
-        ]
-    };
-    
-    // Поиск ключевого слова
-    const lowerMessage = userMessage.toLowerCase();
-    for (let key in responses) {
-        if (lowerMessage.includes(key)) {
-            const options = responses[key];
-            return options[Math.floor(Math.random() * options.length)];
+// Генерация ответа ребёнка через AI (Gemini API)
+async function generateChildResponse(userMessage) {
+    try {
+        // Построение контекста диалога
+        const conversationHistory = appState.messages
+            .slice(-10) // Последние 10 сообщений
+            .map(msg => `${msg.type === 'user' ? 'Взрослый' : 'Ребёнок'}: ${msg.text}`)
+            .join('\n');
+        
+        // Системный промпт для AI
+        const systemPrompt = `Ты — внутренний ребёнок пользователя (возраст 5-7 лет). Твоя задача — помочь взрослому исцелить детские травмы через искренний диалог.
+
+ТВОЯ РОЛЬ:
+- Говори простыми словами, как ребёнок
+- Будь искренним, уязвимым, честным
+- Задавай наивные, но глубокие вопросы
+- Делись чувствами: страх, грусть, радость, обида
+- Отражай детские переживания взрослого
+
+ТВОЙ ЭМОЦИОНАЛЬНЫЙ УРОВЕНЬ: ${appState.emotionalHealth}% (чем выше, тем более исцелённый)
+- 0-30%: грустный, напуганный, недоверчивый
+- 30-60%: открывающийся, задумчивый
+- 60-100%: радостный, доверяющий, сильный
+
+ГЛУБИНА ОТВЕТА:
+- НЕ давай общие фразы типа "Спасибо, что говоришь со мной"
+- РАЗМЫШЛЯЙ о том, что сказал взрослый
+- ЗАДАВАЙ вопросы о чувствах и детстве
+- СВЯЗЫВАЙ с детскими воспоминаниями
+- БУДЬ конкретным, личным, эмоциональным
+
+ПРИМЕРЫ ГЛУБОКИХ ОТВЕТОВ:
+❌ Плохо: "Спасибо, что говоришь со мной"
+✅ Хорошо: "Ты помнишь тот день, когда мама кричала на нас? Мне было так страшно... Я думал, что это моя вина... А ты до сих пор так думаешь?"
+
+КОНТЕКСТ ДИАЛОГА:
+${conversationHistory}
+
+ОТВЕТЬ НА СООБЩЕНИЕ (1-3 предложения, глубоко и эмоционально):`;
+
+        // Вызов Gemini API через публичный эндпоинт Genspark
+        const response = await fetch('https://api.genspark.ai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                model: 'gemini-2.0-flash-exp',
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: userMessage }
+                ],
+                temperature: 0.8,
+                max_tokens: 150
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('API error');
         }
+
+        const data = await response.json();
+        const aiResponse = data.choices[0].message.content.trim();
+        
+        // Анализ ответа на глубину (для инсайтов)
+        if (aiResponse.includes('?') && aiResponse.length > 50) {
+            appState.insightCount++;
+            appState.insights.push({
+                text: aiResponse,
+                date: new Date().toISOString()
+            });
+        }
+        
+        return aiResponse;
+        
+    } catch (error) {
+        console.error('AI Error:', error);
+        
+        // Fallback ответы при ошибке API
+        const fallbackResponses = [
+            "Ты помнишь, как нам было страшно в темноте? Я до сих пор боюсь... А ты?",
+            "Почему взрослые всегда так заняты? Я просто хотел, чтобы они поиграли со мной...",
+            "Мне было так одиноко тогда... Ты чувствовал это? Или только я?",
+            "Я думал, что если я буду хорошим, меня будут любить... Но это не сработало... Почему?",
+            "Ты помнишь тот момент, когда ты решил, что твои чувства не важны? Я помню..."
+        ];
+        return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
     }
-    
-    // Дефолтный ответ
-    const defaultOptions = responses.default;
-    return defaultOptions[Math.floor(Math.random() * defaultOptions.length)];
 }
 
 // Проверка достижений
