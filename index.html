@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Дмитрий Мелешко | Школа психологии</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-content">
+                <div class="photo-wrapper">
+                    <img src="" alt="Дмитрий Мелешко" class="profile-photo" crossorigin="anonymous">
+                </div>
+                <h1 class="main-title">ДМИТРИЙ МЕЛЕШКО</h1>
+                <h2 class="subtitle">ПСИХОЛОГ-ПСИХОТЕРАПЕВТ</h2>
+                <p class="description">
+                    Раскройте свой потенциал, обретите психологическую зрелость и близость с людьми
+                </p>
+            </div>
+        </header>
+
+        <!-- Menu Section -->
+        <section class="menu">
+            <!-- Платные программы -->
+            <div class="menu-card premium-card">
+                <div class="card-header">
+                    <div class="icon-wrapper premium-icon">
+                        <span class="icon">💎</span>
+                    </div>
+                    <div class="card-title-wrapper">
+                        <h3 class="card-title">Платные программы</h3>
+                        <p class="card-subtitle">Глубокая трансформация личности</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="action-btn premium-btn" onclick="openCourse()">
+                        <span class="btn-content">
+                            <span class="btn-icon">🔥</span>
+                            <span class="btn-text">Циклы Силы</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn premium-btn" onclick="openVDA()">
+                        <span class="btn-content">
+                            <span class="btn-icon">🌱</span>
+                            <span class="btn-text">Взрослые дети алкоголиков</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn premium-btn" onclick="openBoundaries()">
+                        <span class="btn-content">
+                            <span class="btn-icon">🛡️</span>
+                            <span class="btn-text">Мастер личных границ</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn premium-btn" onclick="openSeparation()">
+                        <span class="btn-content">
+                            <span class="btn-icon">🦋</span>
+                            <span class="btn-text">Сепарация. Путь к свободе</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn premium-btn" onclick="openSelfEsteem()">
+                        <span class="btn-content">
+                            <span class="btn-icon">⭐</span>
+                            <span class="btn-text">Самооценка. Я окей - Ты окей</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Бесплатные эфиры -->
+            <div class="menu-card free-card">
+                <div class="card-header">
+                    <div class="icon-wrapper free-icon">
+                        <span class="icon">🎁</span>
+                    </div>
+                    <div class="card-title-wrapper">
+                        <h3 class="card-title">Бесплатные эфиры</h3>
+                        <p class="card-subtitle">Начните путь к себе</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="action-btn free-btn" onclick="openWebinar()">
+                        <span class="btn-content">
+                            <span class="btn-icon">💚</span>
+                            <span class="btn-text">Выход из созависимости</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn free-btn" onclick="openSelfTherapy()">
+                        <span class="btn-content">
+                            <span class="btn-icon">🧘</span>
+                            <span class="btn-text">Инструменты самотерапии</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Твой внутренний ребёнок -->
+            <div class="menu-card inner-child-card">
+                <div class="card-header">
+                    <div class="icon-wrapper inner-child-icon">
+                        <span class="icon">👶</span>
+                    </div>
+                    <div class="card-title-wrapper">
+                        <h3 class="card-title">Твой внутренний ребёнок</h3>
+                        <p class="card-subtitle">Работа с травмами через диалог</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="action-btn inner-child-btn" onclick="openInnerChild()">
+                        <span class="btn-content">
+                            <span class="btn-icon">💫</span>
+                            <span class="btn-text">Начать диалог</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Подкасты -->
+            <div class="menu-card podcast-card">
+                <div class="card-header">
+                    <div class="icon-wrapper podcast-icon">
+                        <span class="icon">🎙️</span>
+                    </div>
+                    <div class="card-title-wrapper">
+                        <h3 class="card-title">Наши подкасты</h3>
+                        <p class="card-subtitle">Слушайте где удобно</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="action-btn podcast-btn" onclick="openPodcastTelegram()">
+                        <span class="btn-content">
+                            <span class="btn-icon">📱</span>
+                            <span class="btn-text">Telegram</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn podcast-btn" onclick="openPodcastYandex()">
+                        <span class="btn-content">
+                            <span class="btn-icon">🎵</span>
+                            <span class="btn-text">Яндекс.Музыка</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn podcast-btn" onclick="openPodcastApple()">
+                        <span class="btn-content">
+                            <span class="btn-icon">🎧</span>
+                            <span class="btn-text">Apple Podcasts</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Служба заботы -->
+            <div class="menu-card support-card">
+                <div class="card-header">
+                    <div class="icon-wrapper support-icon">
+                        <span class="icon">💬</span>
+                    </div>
+                    <div class="card-title-wrapper">
+                        <h3 class="card-title">Служба заботы</h3>
+                        <p class="card-subtitle">Мы всегда на связи</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="action-btn support-btn" onclick="openSupport()">
+                        <span class="btn-content">
+                            <span class="btn-icon">✉️</span>
+                            <span class="btn-text">Написать в Telegram</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Консультация психолога -->
+            <div class="menu-card consultation-card">
+                <div class="card-header">
+                    <div class="icon-wrapper consultation-icon">
+                        <span class="icon">🧠</span>
+                    </div>
+                    <div class="card-title-wrapper">
+                        <h3 class="card-title">Консультация психолога</h3>
+                        <p class="card-subtitle">Индивидуальная работа</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="action-btn consultation-btn" onclick="openConsultation()">
+                        <span class="btn-content">
+                            <span class="btn-icon">📅</span>
+                            <span class="btn-text">Записаться на консультацию</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Социальные сети -->
+            <div class="menu-card social-card">
+                <div class="card-header">
+                    <div class="icon-wrapper social-icon">
+                        <span class="icon">🌐</span>
+                    </div>
+                    <div class="card-title-wrapper">
+                        <h3 class="card-title">Наши соцсети</h3>
+                        <p class="card-subtitle">Подписывайтесь и следите за новостями</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="action-btn social-btn" onclick="openYouTube()">
+                        <span class="btn-content">
+                            <span class="btn-icon">📺</span>
+                            <span class="btn-text">YouTube</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn social-btn" onclick="openVK()">
+                        <span class="btn-content">
+                            <span class="btn-icon">💙</span>
+                            <span class="btn-text">ВКонтакте</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn social-btn" onclick="openVKVideo()">
+                        <span class="btn-content">
+                            <span class="btn-icon">🎬</span>
+                            <span class="btn-text">VK Видео</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn social-btn" onclick="openDzen()">
+                        <span class="btn-content">
+                            <span class="btn-icon">📰</span>
+                            <span class="btn-text">Дзен</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                    <button class="action-btn social-btn" onclick="openRutube()">
+                        <span class="btn-content">
+                            <span class="btn-icon">🎥</span>
+                            <span class="btn-text">Rutube</span>
+                        </span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">© 2026 Дмитрий Мелешко</p>
+                <p class="footer-subtext">Школа психологии</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
