@@ -18,8 +18,8 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: var(--bg-light);
-    color: var(--primary-black);
+    background: var(--primary-black);
+    color: var(--primary-white);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -122,10 +122,11 @@ body {
 }
 
 .menu-card {
-    background: var(--primary-white);
+    background: var(--primary-black);
     border-radius: 16px;
     padding: 24px;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -224,13 +225,13 @@ body {
 .card-title {
     font-size: 18px;
     font-weight: 700;
-    color: var(--primary-black);
+    color: var(--primary-white);
     margin-bottom: 4px;
 }
 
 .card-subtitle {
     font-size: 13px;
-    color: var(--text-gray);
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 500;
 }
 
@@ -327,8 +328,8 @@ body {
 }
 
 .podcast-btn {
-    background: var(--primary-white);
-    color: var(--primary-black);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-white);
     border: 2px solid var(--primary-blue);
     box-shadow: 0 2px 8px rgba(74, 132, 178, 0.2);
 }
@@ -363,14 +364,14 @@ body {
 }
 
 .social-btn {
-    background: var(--primary-white);
-    color: var(--primary-black);
-    border: 2px solid var(--primary-black);
-    box-shadow: 0 2px 8px rgba(24, 24, 24, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-white);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
 }
 
 .social-btn:active {
-    background: var(--primary-black);
+    background: rgba(255, 255, 255, 0.2);
     color: var(--primary-white);
     transform: translateY(2px);
 }
@@ -379,8 +380,8 @@ body {
 .footer {
     padding: 32px 24px;
     text-align: center;
-    background: var(--primary-white);
-    border-top: 1px solid rgba(0,0,0,0.05);
+    background: var(--primary-black);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-content {
@@ -390,14 +391,14 @@ body {
 
 .footer-text {
     font-size: 14px;
-    color: var(--primary-black);
+    color: var(--primary-white);
     font-weight: 600;
     margin-bottom: 4px;
 }
 
 .footer-subtext {
     font-size: 13px;
-    color: var(--text-gray);
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 500;
 }
 
