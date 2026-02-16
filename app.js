@@ -14,35 +14,50 @@ tg.setHeaderColor('#4A90A4');
 
 // Функция для открытия бесплатного эфира
 function openWebinar() {
-    // Haptic feedback
     if (tg.HapticFeedback) {
         tg.HapticFeedback.impactOccurred('medium');
     }
-    
-    // Открываем ссылку на вебинар
     tg.openLink('https://meleshkod.ru/webinar-2');
 }
 
 // Функция для открытия курса "Циклы Силы"
 function openCourse() {
-    // Haptic feedback
     if (tg.HapticFeedback) {
         tg.HapticFeedback.impactOccurred('medium');
     }
-    
-    // Открываем ссылку на курс
     tg.openLink('https://meleshkod.ru/ciklsily');
 }
 
-// Функция для открытия основного сайта
-function openWebsite() {
-    // Haptic feedback
+// Функция для открытия подкастов в Telegram
+function openPodcastTelegram() {
     if (tg.HapticFeedback) {
         tg.HapticFeedback.impactOccurred('light');
     }
-    
-    // Открываем главную страницу сайта
-    tg.openLink('http://meleshkod.ru');
+    tg.openLink('https://t.me/mavestreambot/app?startapp=meleshko');
+}
+
+// Функция для открытия подкастов на Яндекс.Музыке
+function openPodcastYandex() {
+    if (tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('light');
+    }
+    tg.openLink('https://music.yandex.ru/album/22198698');
+}
+
+// Функция для открытия подкастов в Apple Podcasts
+function openPodcastApple() {
+    if (tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('light');
+    }
+    tg.openLink('https://podcasts.apple.com/ru/podcast/психология-подкасты-психотерапия-дмитрий-мелешко/id1616817624');
+}
+
+// Функция для открытия службы заботы
+function openSupport() {
+    if (tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('light');
+    }
+    tg.openTelegramLink('https://t.me/MeleshkoDmitrii');
 }
 
 // Уведомляем Telegram, что приложение готово
