@@ -15,6 +15,10 @@
     --podcast-light: #A78BFA;
     --support-color: #EC4899;
     --support-light: #F472B6;
+    --consultation-color: #3B82F6;
+    --consultation-light: #60A5FA;
+    --social-color: #6366F1;
+    --social-light: #818CF8;
     --text-dark: #1F2937;
     --text-light: #6B7280;
     --bg-light: #F9FAFB;
@@ -150,6 +154,8 @@ body {
 .free-card::before { background: linear-gradient(180deg, var(--free-color), var(--free-light)); }
 .podcast-card::before { background: linear-gradient(180deg, var(--podcast-color), var(--podcast-light)); }
 .support-card::before { background: linear-gradient(180deg, var(--support-color), var(--support-light)); }
+.consultation-card::before { background: linear-gradient(180deg, var(--consultation-color), var(--consultation-light)); }
+.social-card::before { background: linear-gradient(180deg, var(--social-color), var(--social-light)); }
 
 .card-header {
     display: flex;
@@ -201,6 +207,16 @@ body {
 .support-icon {
     background: linear-gradient(135deg, var(--support-light), var(--support-color));
     box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+}
+
+.consultation-icon {
+    background: linear-gradient(135deg, var(--consultation-light), var(--consultation-color));
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.social-icon {
+    background: linear-gradient(135deg, var(--social-light), var(--social-color));
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
 .card-title-wrapper {
@@ -334,6 +350,30 @@ body {
     transform: translateY(2px);
 }
 
+.consultation-btn {
+    background: linear-gradient(135deg, var(--consultation-color), var(--consultation-light));
+    color: white;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.consultation-btn:active {
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+    transform: translateY(2px);
+}
+
+.social-btn {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    color: var(--text-dark);
+    border: 2px solid var(--social-color);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+.social-btn:active {
+    background: linear-gradient(135deg, var(--social-color), var(--social-light));
+    color: white;
+    transform: translateY(2px);
+}
+
 /* Footer */
 .footer {
     padding: 32px 24px;
@@ -388,6 +428,12 @@ body.telegram-theme-dark .footer-text {
 
 body.telegram-theme-dark .footer-subtext {
     color: #a0a0a0;
+}
+
+body.telegram-theme-dark .podcast-btn,
+body.telegram-theme-dark .social-btn {
+    background: #3a3a3a;
+    color: #ffffff;
 }
 
 /* Responsive */
