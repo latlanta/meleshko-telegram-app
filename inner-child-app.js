@@ -269,6 +269,14 @@ ${conversationHistory}
             });
         }
         
+        // 🎤 ГЕНЕРАЦИЯ ГОЛОСА
+        try {
+            await generateVoice(aiResponse);
+        } catch (voiceError) {
+            console.warn('Voice generation failed:', voiceError);
+            // Продолжаем без голоса, если не получилось
+        }
+        
         return aiResponse;
         
     } catch (error) {
@@ -282,7 +290,108 @@ ${conversationHistory}
             "Я думал, что если я буду хорошим, меня будут любить... Но это не сработало... Почему?",
             "Ты помнишь тот момент, когда ты решил, что твои чувства не важны? Я помню..."
         ];
-        return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+        const fallbackText = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+        
+        // Попытка озвучить fallback
+        try {
+            await generateVoice(fallbackText);
+        } catch (voiceError) {
+            console.warn('Fallback voice failed:', voiceError);
+        }
+        
+        return fallbackText;
+    }
+}
+
+// 🎤 Генерация голоса через ElevenLabs API (детский голос)
+async function generateVoice(text) {
+    try {
+        // Используем публичный эндпоинт Genspark для генерации голоса
+        const response = await fetch('https://api.genspark.ai/v1/audio/speech', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                model: 'tts-1', // Используем базовую модель
+                input: text,
+                voice: 'nova', // Женский голос (похож на детский)
+                speed: 0.9 // Немного медленнее для детского эффекта
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Voice API error');
+        }
+
+        // Получаем аудио как blob
+        const audioBlob = await response.blob();
+        const audioUrl = URL.createObjectURL(audioBlob);
+        
+        // Воспроизводим аудио
+        const audio = new Audio(audioUrl);
+        audio.volume = 0.8; // Немного тише
+        
+        // Показываем индикатор воспроизведения
+        showVoiceIndicator();
+        
+        audio.onended = () => {
+            hideVoiceIndicator();
+            URL.revokeObjectURL(audioUrl); // Очистка памяти
+        };
+        
+        audio.onerror = () => {
+            hideVoiceIndicator();
+            URL.revokeObjectURL(audioUrl);
+        };
+        
+        await audio.play();
+        
+    } catch (error) {
+        console.error('Voice generation error:', error);
+        throw error; // Пробрасываем ошибку выше
+    }
+}
+
+// Показать индикатор воспроизведения голоса
+function showVoiceIndicator() {
+    const indicator = document.createElement('div');
+    indicator.id = 'voiceIndicator';
+    indicator.innerHTML = '🔊 Говорит...';
+    indicator.style.cssText = `
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(74, 132, 178, 0.95);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        animation: voicePulse 1.5s ease-in-out infinite;
+    `;
+    
+    // Добавляем анимацию
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes voicePulse {
+            0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.8; transform: translateX(-50%) scale(1.05); }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(indicator);
+}
+
+// Скрыть индикатор
+function hideVoiceIndicator() {
+    const indicator = document.getElementById('voiceIndicator');
+    if (indicator) {
+        indicator.remove();
     }
 }
 
